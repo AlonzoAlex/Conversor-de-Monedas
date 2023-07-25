@@ -43,6 +43,11 @@ public class Continuar extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +82,14 @@ public class Continuar extends javax.swing.JFrame {
 
     private void btnContinuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuatActionPerformed
         // TODO add your handling code here:
+        new MenuPrincipal().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnContinuatActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

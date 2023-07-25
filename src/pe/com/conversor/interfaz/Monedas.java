@@ -1,11 +1,14 @@
-
 package pe.com.conversor.interfaz;
 
+
+import java.util.*;
+import javax.swing.JComboBox;
+import pe.com.conversor.datos.TiposMonedas;
 import javax.swing.JLabel;
 
 public class Monedas extends javax.swing.JFrame {
     private double cantidad;
-
+    
     public double getCantidad() {
         return cantidad;
     }
@@ -16,13 +19,32 @@ public class Monedas extends javax.swing.JFrame {
 
     public Monedas() {
         initComponents();
+        rellenarCombobox();
     }
     
     public Monedas(double cantidad) {
         initComponents();
         this.cantidad = cantidad;
-        jLabel1.setText(cantidad + "");
+        rellenarCombobox();
     }
+    
+    public void rellenarCombobox(){
+        ArrayList <String> tiposDeMonedas = new ArrayList<>(
+        Arrays.asList(new TiposMonedas().getTiposMonedas()));
+        for (String a : tiposDeMonedas){
+            jComboBox1.addItem(a);
+            jComboBox2.addItem(a);
+        }
+    }
+    
+    public String convertirMonto(){
+        double tipoCambio = new TiposMonedas().getTipoCambio(jComboBox1.getSelectedIndex(), jComboBox2.getSelectedIndex());
+        double montoConvertido = cantidad*tipoCambio;
+        double montoRedondeado = Math.round(montoConvertido * Math.pow(10, 2))/Math.pow(10, 2);
+        String mensaje = cantidad + " " + jComboBox1.getSelectedItem() + " son " + montoConvertido + " " + jComboBox2.getSelectedItem() + "";
+        return mensaje;
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -47,13 +69,31 @@ public class Monedas extends javax.swing.JFrame {
 
         jLabel3.setText("a");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +142,25 @@ public class Monedas extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        // TODO add your handling code here:
+        String mensajeResultado = convertirMonto();
+        new Resultado(mensajeResultado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
